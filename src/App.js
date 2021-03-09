@@ -19,7 +19,7 @@ class App extends Component {
         <div className="container">
           <input type="text" value={this.state.inputValue} onChange={(event) => this.onInputChange(event.target.value)} placeholder="Say Something" />
           <p className="echo">Echo:</p>
-          <p>This should mirror the text you typed into the input field.</p>
+			{this.state.inputValue !== '' && (<p>{this.state.inputValue}</p>)}
         </div>
       </div>
     );
