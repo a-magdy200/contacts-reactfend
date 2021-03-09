@@ -8,24 +8,53 @@ This exercise will help you practice many of your newly aquired React skills.
 The instructions are included in the `instructions.md` file.
 */
 
-const users = [{ username: 'Amy' }, { username: 'John' }];
-
-const messages = [
-  { username: 'Amy', text: 'Hi, Jon!' },
-  { username: 'Amy', text: 'How are you?' },
-  { username: 'John', text: 'Hi, Amy! Good, you?' },
-];
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    const users = [{ username: 'Amy' }, { username: 'John' }];
+
+    const messages = [
+      { username: 'Amy', text: 'Hi, Jon!' },
+      { username: 'Amy', text: 'How are you?' },
+      { username: 'John', text: 'Hi, Amy! Good, you?' },
+    ];
+    this.state = {
+      users,
+      messages,
+      firstUserInput: '',
+      secondUserInput: '',
+    }
+  }
   /*
   If the user did not type anything, he/she should not be
   allowed to submit.
   */
-  isDisabled = () => {
-    return false;
-  };
+  sendMessage = (e, username) => {
+    e.preventDefault();
+    let {users, firstUserInput, secondUserInput} = this.state;
+    let newMessage = {text: '', username};
+    if (username === users[0].username) {
+      newMessage.text = firstUserInput;
+      this.setState((currentState) => ({
+        messages: [...currentState.messages, newMessage],
+        firstUserInput: ''
+      }));
+    } else {
+      newMessage.text = secondUserInput;
+      this.setState((currentState) => ({
+        messages: [...currentState.messages, newMessage],
+        secondUserInput: ''
+      }));
+    }
 
+  }
+  updateInput = (key, value) => {
+    this.setState({[key]: value});
+  }
   render() {
+    let {users, messages, firstUserInput, secondUserInput} = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -52,9 +81,17 @@ class App extends Component {
 
             <div>
               <form className="input-group">
-                <input type="text" className="form-control" placeholder="Enter your message..." />
+                <input
+                  value={firstUserInput}
+                  onChange={event => this.updateInput('firstUserInput', event.target.value)}
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your message..." />
                 <div className="input-group-append">
-                  <button className="btn submit-button" disabled={this.isDisabled()}>
+                  <button
+                    onClick={(e) => this.sendMessage(e, users[0].username)}
+                    className="btn submit-button"
+                    disabled={firstUserInput === ''}>
                     SEND
                   </button>
                 </div>
@@ -80,9 +117,17 @@ class App extends Component {
 
             <div>
               <form className="input-group">
-                <input type="text" className="form-control" placeholder="Enter your message..." />
+                <input
+                  value={secondUserInput}
+                  onChange={event => this.updateInput('secondUserInput', event.target.value)}
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your message..." />
                 <div className="input-group-append">
-                  <button className="btn submit-button" disabled={this.isDisabled()}>
+                  <button
+                    onClick={(e) => this.sendMessage(e, users[1].username)}
+                    className="btn submit-button"
+                    disabled={secondUserInput === ''}>
                     SEND
                   </button>
                 </div>
