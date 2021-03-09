@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-git init && git config user.email "ahmedmagdy.200m@gmail.com" && git config user.name "Ahmed magdy" && git add . && git commit -m "Initial Commit" && git remote add origin https://github.com/a-magdy200/contacts-reactfend.git
+
 /*
 This exercise will help you put together and practice all of the concepts you've
 learned thus far. It will also help you form a strong foundational knowledge of
